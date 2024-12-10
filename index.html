@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Triad App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="logo-container">
+        <img id="logo" src="logo.png" alt="Logo">
+    </div>
+    <div id="menu">
+        <button id="start-game">Commencer le jeu</button>
+    </div>
+    <div id="game" style="display: none;">
+        <div id="question"></div>
+        <div id="validation-message" style="color: green; font-weight: bold;"></div> <!-- Ajouté pour les messages de validation -->
+        <div id="result"></div>
+        <div id="options"></div>
+        <div id="buttons" class="buttons-bottom">
+            <button id="next-question">Next Question</button>
+            <button id="back-to-menu">Menu</button>
+            <button id="restart-test">Restart test</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; Guillaume Estace</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

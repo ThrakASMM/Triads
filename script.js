@@ -67,25 +67,36 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('back-to-menu').style.display = 'block';
         document.getElementById('restart-test').style.display = 'block';
         document.getElementById('next-question').style.display = 'block';
+    
         questionCount = 0;
         correctAnswers = 0;
         startTime = new Date();
-        preloadSounds();
-        nextQuestion();
+    
+        console.log("Chargement des sons...");
+        preloadSounds().then(() => {
+            console.log("Début du test après le chargement des sons");
+            nextQuestion();
+        }).catch(error => {
+            console.error("Erreur lors du préchargement des sons :", error);
+            nextQuestion(); // Démarrer quand même si erreur
+        });
     }
 
     function preloadSounds() {
-        Object.keys(notes).forEach(note => {
-            preloadedSounds[note] = new Audio(notes[note]);
-            preloadedSounds[note].addEventListener('canplaythrough', () => {
-                console.log(`Preloaded sound: ${note}`);
-            }, false);
-            
-            preloadedSounds[note].addEventListener('error', () => {
-                console.error(`Failed to preload sound: ${note}`);
+        const promises = Object.keys(notes).map(note => {
+            return new Promise((resolve, reject) => {
+                const audio = new Audio(notes[note]);
+                audio.addEventListener('canplaythrough', () => resolve(note), false);
+                audio.addEventListener('error', () => reject(`Échec du chargement du son : ${note}`));
+                preloadedSounds[note] = audio;
             });
         });
+    
+        return Promise.all(promises)
+            .then(() => console.log("Tous les sons ont été chargés avec succès"))
+            .catch(error => console.error(error));
     }
+    
 
     function stopAllSounds() {
         Object.values(preloadedSounds).forEach(audio => {
@@ -139,13 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function nextQuestion() {
         document.getElementById('validation-message').textContent = ''; // Effacer le message de validation
+    
         if (questionCount < totalQuestions) {
             document.getElementById('result').textContent = '';
             generateQuestion();
+            
+            // Réactiver le bouton "Submit" pour la nouvelle question
+            const submitButton = document.getElementById('submit-answer');
+            if (submitButton) submitButton.disabled = false;
         } else {
             endGame();
         }
     }
+    
+    
 
     function generateQuestion() {
         const baseNote = getRandomNoteInRange(3, 2);
@@ -321,7 +339,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 4000);
         }).catch(error => console.error('Error playing audio:', error));
     }
-
+    function validateAnswer() {
+        const selectedTriad = document.getElementById('triad-select').value;
+        const selectedInversion = document.getElementById('inversion-select').value;
+        const selectedFundamental = document.getElementById('fundamental-select').value;
+        const selectedAnswer = `${selectedFundamental}${selectedTriad}${getInversionLabel(selectedInversion)}`;
+        const validationMessage = document.getElementById('validation-message');
+        const nextQuestionButton = document.getElementById('next-question');
+        const submitButton = document.getElementById('submit-answer'); // Cibler le bon bouton
+    
+        console.log("Réponse sélectionnée :", selectedAnswer);
+        console.log("Réponse correcte :", correctAnswer);
+    
+        // Désactiver le bouton Submit après une réponse
+        if (submitButton) submitButton.disabled = true;
+        nextQuestionButton.disabled = true;
+    
+        if (selectedAnswer === correctAnswer) {
+            validationMessage.innerHTML = '<span style="color: green;">Correct ! ✅</span>';
+            correctAnswers++;
+    
+            console.log("Bonne réponse ! Passage à la question suivante après 2 secondes.");
+    
+            // Attendre 2 secondes avant de permettre de continuer
+            setTimeout(() => {
+                if (submitButton) submitButton.disabled = false; // Réactiver pour la prochaine question
+                nextQuestionButton.disabled = false;
+                nextQuestion();
+            }, 2000);
+        } else {
+            validationMessage.innerHTML = `<span style="color: red;">Incorrect ❌, la bonne réponse était <strong>${correctAnswer}</strong>.</span>`;
+    
+            console.log("Mauvaise réponse ! Rejoue la bonne triade après 1 seconde.");
+            
+            // Rejouer la bonne triade après 1 seconde
+            setTimeout(() => {
+                playTriadAgain();
+                console.log("Triade correcte rejouée !");
+            }, 1000);
+    
+            // Attendre 5 secondes avant d’autoriser à passer à la question suivante
+            setTimeout(() => {
+                if (submitButton) submitButton.disabled = false; // Réactiver pour la prochaine question
+                nextQuestionButton.disabled = false;
+            }, 5000);
+        }
+    }
+    
+    
+    
     function updateOptions() {
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
@@ -355,30 +421,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const submitButton = document.createElement('button');
-        submitButton.textContent = 'Submit';
-        submitButton.style.backgroundColor = 'green'; // Ajouter un style en ligne pour le bouton
-        submitButton.style.color = 'white'; // Ajouter un style en ligne pour le texte du bouton
-        submitButton.addEventListener('click', () => {
-            const selectedTriad = triadSelect.value;
-            const selectedInversion = inversionSelect.value;
-            const selectedFundamental = fundamentalSelect.value;
-            const selectedAnswer = `${selectedFundamental}${selectedTriad}${getInversionLabel(selectedInversion)}`;
+submitButton.id = 'submit-answer'; // Ajout d'un ID pour mieux le gérer
+submitButton.textContent = 'Submit';
+submitButton.style.backgroundColor = 'green';
+submitButton.style.color = 'white';
+submitButton.addEventListener('click', validateAnswer);
 
-            console.log(`Correct Answer: ${correctAnswer}`);
-            console.log(`Selected Answer: ${selectedAnswer}`);
 
-            const validationMessage = document.getElementById('validation-message');
-            if (selectedAnswer === correctAnswer) {
-                validationMessage.textContent = 'Correcte !';
-                validationMessage.style.color = 'green';
-                correctAnswers++;
-            } else {
-                validationMessage.textContent = `Incorrect, la bonne réponse était ${correctAnswer}.`;
-                validationMessage.style.color = 'red';
-            }
-            questionCount++;
-            setTimeout(nextQuestion, 2000);
-        });
 
         const replayButton = document.createElement('button');
         replayButton.textContent = 'Replay';

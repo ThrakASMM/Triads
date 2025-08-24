@@ -1,31 +1,102 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Triad App V2</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Ear Training — Triades</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="logo-container">
-        <img id="logo" src="logo.png" alt="Logo">
+  <header class="menu-hdr">
+    <div>
+      <h1>Ear Training — Triades</h1>
+      <p class="subtitle">Reconnaissance des triades et renversements</p>
     </div>
-    <div id="menu">
-        <button id="start-game">Commencer le jeu</button>
+    <img src="logo.png" alt="Logo" class="hdr-logo" />
+  </header>
+
+  <!-- MENU -->
+  <main id="menu">
+    <div class="card">
+      <h2>Type de jeu</h2>
+      <label><input type="radio" name="gametype" value="training" checked /> Entraînement</label>
+      <label><input type="radio" name="gametype" value="test" /> Test (10 questions)</label>
     </div>
-    <div id="game" style="display: none;">
-        <div id="question"></div>
-        <div id="validation-message" style="color: green; font-weight: bold;"></div> <!-- Ajouté pour les messages de validation -->
-        <div id="result"></div>
-        <div id="options"></div>
-        <div id="buttons" class="buttons-bottom">
-            <button id="next-question">Next Question</button>
-            <button id="back-to-menu">Menu</button>
-            <button id="restart-test">Restart test</button>
-        </div>
+
+    <div class="card">
+      <h2>Mode</h2>
+      <label><input type="radio" name="mode" value="sequential" checked /> Séparé (notes séquentielles)</label>
+      <label><input type="radio" name="mode" value="simultaneous" /> Simultané (accord joué ensemble)</label>
     </div>
-    <footer>
-        <p>&copy; Guillaume Estace</p>
-    </footer>
-    <script src="script.js"></script>
+
+    <div class="card">
+      <h2>Voicing</h2>
+      <label><input type="radio" name="voicing" value="close" checked /> Close triads</label>
+      <label><input type="radio" name="voicing" value="open" /> Open triads</label>
+      <label><input type="radio" name="voicing" value="both" /> Close + Open</label>
+    </div>
+
+    <div class="card" id="triad-picker">
+      <h2>Types de triades incluses</h2>
+      <div id="triad-checks"></div>
+      <div class="buttons-bottom">
+        <button id="select-all-triads" class="ctrl-btn white">Tout sélectionner</button>
+        <button id="deselect-all-triads" class="ctrl-btn white">Tout désélectionner</button>
+        <span id="selected-count"></span>
+      </div>
+      <p id="triad-warning" style="color:red; display:none;">⚠️ Sélectionnez au moins une triade.</p>
+    </div>
+
+    <!-- Commencer → BLEU -->
+    <button id="start-game" class="ctrl-btn">Commencer</button>
+  </main>
+
+  <!-- JEU -->
+  <main id="game" style="display:none;">
+    <div class="hud">
+      <div class="hud-left">
+        <div id="progress"></div>
+        <div id="score"></div>
+      </div>
+      <div id="timing"></div>
+    </div>
+
+    <div id="question" class="card"></div>
+
+    <!-- Sélecteurs de réponse -->
+    <div class="card triad-selects">
+      <select id="triad-select"></select>
+      <select id="inversion-select"></select>
+      <select id="fundamental-select"></select>
+      <select id="voicing-select" style="display:none">
+        <option value="">Choisir le voicing…</option>
+        <option value="close">Close</option>
+        <option value="open">Open</option>
+      </select>
+    </div>
+
+    <!-- Valider → FUCHSIA -->
+    <button id="submit-answer" class="validate-btn">Valider</button>
+
+    <div id="validation-message" class="feedback"></div>
+    <div id="result"></div>
+
+    <div class="buttons-bottom">
+      <!-- Réécouter → BLEUS -->
+      <button id="replay-single-and-triad" class="ctrl-btn">Réécouter (note + accord)</button>
+      <button id="replay-triad-only" class="ctrl-btn">Réécouter (accord seul)</button>
+      <button id="force-close" class="ctrl-btn">Écouter en close</button>
+      <button id="force-open" class="ctrl-btn">Écouter en open</button>
+
+      <button id="next-question" class="ctrl-btn">Question suivante</button>
+      <button id="restart-test" class="ctrl-btn">Recommencer le test</button>
+      <!-- Menu → BLANC -->
+      <button id="back-to-menu" class="ctrl-btn white">Menu</button>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    © 2025 — Guillaume Estace / ASMM V3.7
+  </footer>
 </body>
 </html>

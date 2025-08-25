@@ -1,220 +1,260 @@
 /* ===========================
-   ASMM Pro Theme — Fuchsia Valider, Bleu partout ailleurs
+   ASMM Pro Theme — Version complète commentée
    =========================== */
 
-   :root {
-    --bg:#1f1f1f;            /* fond global sombre */
-    --surface:#ffffff;       /* surface cartes */
-    --card:#ffffff;
-    --primary:#0a66ff;       /* bleu ASMM */
-    --primary-700:#0756d6;
-    --fuchsia:#e91e63;       /* bouton Valider */
-    --fuchsia-hover:#c2185b;
-    --neutral-border:#d0d5dd;
-    --text:#111;
-    --text-sub:#5a5a5a;
-    --text-invert:#fff;
-    --shadow:0 2px 10px rgba(0,0,0,.08);
-    --radius-lg:12px;
-    --radius-md:10px;
+/* --- Variables globales (couleurs, tailles, etc.) --- */
+:root {
+  --bg:#1f1f1f;            /* fond global sombre */
+  --surface:#ffffff;       /* fond des cartes principales */
+  --card:#ffffff;          /* fond interne des blocs */
+  --primary:#0a66ff;       /* bleu ASMM (boutons par défaut) */
+  --primary-700:#0756d6;   /* bleu foncé hover */
+  --fuchsia:#e91e63;       /* bouton Valider */
+  --fuchsia-hover:#c2185b; /* hover du Valider */
+  --neutral-border:#d0d5dd;
+  --text:#111;             /* texte principal */
+  --text-sub:#5a5a5a;      /* sous-texte */
+  --text-invert:#fff;      /* texte inversé (sur fond sombre ou bouton coloré) */
+  --shadow:0 2px 10px rgba(0,0,0,.08); /* ombre douce */
+  --radius-lg:12px;
+  --radius-md:10px;
+}
+
+/* --- Reset & Base --- */
+*{box-sizing:border-box;}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+.menu-hdr{
+  width:min(960px,92vw);
+  margin:20px 0 8px;
+  padding:8px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.menu-hdr h1{
+  margin:0;
+  font-size:clamp(28px,2.5vw,34px);
+  font-weight:800;
+  color:var(--text-invert);  /* titre en blanc */
+}
+.menu-hdr .subtitle{
+  margin:4px 0 0;
+  font-size:clamp(16px,1.5vw,20px);
+  color:#cfd4dc;            /* sous-titre gris clair lisible */
+}
+.hdr-logo{
+  width:clamp(110px,20vw,180px)!important;
+  max-height:140px;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
+
+/* ===========================
+   CONTAINERS
+   =========================== */
+#menu,#game{
+  background:var(--surface);
+  width:min(960px,92vw);
+  padding:clamp(16px,2.6vw,22px);
+  border-radius:var(--radius-lg);
+  margin:6px 0 18px;
+  box-shadow:var(--shadow);
+}
+.card{
+  background:var(--card);
+  border-radius:var(--radius-lg);
+  padding:14px;
+  margin-bottom:14px;
+  border:1px solid #eee;
+}
+
+/* ===========================
+   HUD (progression, score, temps)
+   =========================== */
+.hud{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+}
+.hud-left>div{line-height:1.25;}
+#timing{font-weight:600;}
+
+/* ===========================
+   QUESTION BLOCK
+   =========================== */
+#question{
+  background:#f9fbff; /* léger bleu clair */
+  border:1px solid #e7eefb;
+  color:#111;
+}
+
+/* ===========================
+   SELECTS (Réponses)
+   =========================== */
+.triad-selects{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-bottom:6px;
+}
+select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:var(--radius-md);
+  border:1.5px solid var(--neutral-border);
+  font-size:1rem;
+  font-weight:700;   /* bien visible */
+  background:#fff;
+  color:#111;
+}
+select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
+
+/* ===========================
+   BOUTON VALIDER (fuchsia)
+   =========================== */
+.validate-btn{
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  border-radius:var(--radius-md);
+  font-size:1.05rem;
+  font-weight:800;
+  background:var(--fuchsia);
+  color:var(--text-invert);
+  cursor:pointer;
+  transition:transform .15s ease,background .15s ease;
+}
+.validate-btn:hover{background:var(--fuchsia-hover);transform:translateY(-1px);}
+.validate-btn:active{transform:translateY(0);}
+
+/* ===========================
+   BOUTONS CONTRÔLES
+   =========================== */
+.buttons-bottom{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
+}
+.ctrl-btn{
+  padding:12px 18px;
+  font-size:.98rem;
+  font-weight:800;
+  border-radius:var(--radius-md);
+  cursor:pointer;
+  border:2px solid transparent;
+  background:var(--primary);   /* TOUS bleus par défaut */
+  color:#fff;
+  transition:background .12s ease,transform .12s ease;
+}
+.ctrl-btn:hover{transform:translateY(-1px);}
+.ctrl-btn:active{transform:translateY(0);background:var(--primary-700);}
+
+/* Variante blanche (ex: bouton Menu) */
+.ctrl-btn.white{
+  background:#fff;
+  color:#333;
+  border:2px solid #ddd;
+}
+.ctrl-btn.white:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
+
+/* ===========================
+   FEEDBACK + RÉSULTATS
+   =========================== */
+.feedback{
+  min-height:28px;
+  margin:10px 0 12px;
+  font-size:1rem;
+  font-weight:600;
+  text-align:center;
+}
+.feedback.ok{color:#1f8b24;}
+.feedback.err{color:#c62828;}
+
+#result{margin-top:18px;text-align:center;line-height:1.5;}
+.score-img{display:block;margin:12px auto 16px;max-width:230px;height:auto;}
+@media(max-width:600px){.score-img{max-width:180px;}}
+
+/* ===========================
+   SCOREBOARD (responsive)
+   =========================== */
+.table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch;}
+.score-table{width:100%;border-collapse:collapse;}
+.score-table th,.score-table td{
+  border-bottom:1px solid #eaeaea;
+  padding:8px 10px;
+  text-align:center;
+}
+@media(max-width:600px){
+  .score-table thead{display:none;}
+  .score-table,.score-table tbody,.score-table tr,.score-table td{
+    display:block;width:100%;
   }
-  
-  /* Reset & base */
-  *{box-sizing:border-box;}
-  body{
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    margin:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  
-  /* ===== Header ===== */
-  .menu-hdr{
-    width:min(960px,92vw);
-    margin:20px 0 8px;
-    padding:8px 0;
-    display:flex;align-items:center;justify-content:space-between;
-  }
-  .menu-hdr h1{
-    margin:0;
-    font-size:clamp(28px,2.5vw,34px);
-    font-weight:800;
-    color:var(--text-invert);
-  }
-  .menu-hdr .subtitle{
-    margin:4px 0 0;
-    font-size:clamp(16px,1.5vw,20px);
-    color:#cfd4dc; /* lisible sur fond sombre */
-  }
-  .hdr-logo{
-    width:clamp(110px,20vw,180px)!important;
-    max-height:140px;
-    height:auto;
-    object-fit:contain;
-    display:block;
-  }
-  
-  /* ===== Containers ===== */
-  #menu,#game{
-    background:var(--surface);
-    width:min(960px,92vw);
-    padding:clamp(16px,2.6vw,22px);
-    border-radius:var(--radius-lg);
-    margin:6px 0 18px;
-    box-shadow:var(--shadow);
-  }
-  .card{
-    background:var(--card);
-    border-radius:var(--radius-lg);
-    padding:14px;
+  .score-table tr{
     margin-bottom:14px;
-    border:1px solid #eee;
+    border:1px solid #eaeaea;
+    border-radius:10px;
+    padding:8px;
+    background:#fafafa;
   }
-  
-  /* ===== HUD ===== */
-  .hud{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:14px;margin-bottom:10px;
-  }
-  .hud-left>div{line-height:1.25;}
-  #timing{font-weight:600;}
-  
-  /* ===== Question ===== */
-  #question{
-    background:#f9fbff;
-    border:1px solid #e7eefb;
-    color:#111;
-  }
-  
-  /* ===== Selects ===== */
-  .triad-selects{
-    display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:6px;
-  }
-  select{
-    width:100%;
-    padding:12px 14px;
-    border-radius:var(--radius-md);
-    border:1.5px solid var(--neutral-border);
-    font-size:1rem;
-    font-weight:700;
-    background:#fff;
-    color:#111;
-  }
-  select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
-  
-  /* ===== Bouton Valider (fuchsia) ===== */
-  .validate-btn{
-    width:100%;
-    padding:14px 16px;
+  .score-table td{
+    text-align:left;
     border:none;
-    border-radius:var(--radius-md);
-    font-size:1.05rem;
-    font-weight:800;
-    background:var(--fuchsia);
-    color:var(--text-invert);
-    cursor:pointer;
-    transition:transform .15s ease,background .15s ease;
+    padding:6px;
+    font-size:14px;
   }
-  .validate-btn:hover{background:var(--fuchsia-hover);transform:translateY(-1px);}
-  .validate-btn:active{transform:translateY(0);}
-  
-  /* ===== Boutons (bleus par défaut) + blanc pour Menu ===== */
+  .score-table td::before{
+    content:attr(data-label);
+    font-weight:700;
+    display:inline-block;
+    min-width:110px;
+    margin-right:6px;
+  }
+}
+
+/* ===========================
+   FOOTER
+   =========================== */
+.app-footer{
+  margin:26px 0 20px;
+  font-size:.85rem;
+  color:#bdbdbd;
+  text-align:center;
+}
+
+/* ===========================
+   RESPONSIVE MOBILE
+   =========================== */
+@media(min-width:680px){
+  .triad-selects{grid-template-columns:1fr 1fr 1fr 1fr;}
+}
+@media(max-width:600px){
+  .hdr-logo{width:120px!important;}
+  /* Alignement clean en 2 colonnes pour les boutons */
   .buttons-bottom{
-    display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
-  .ctrl-btn{
-    padding:12px 18px;
-    font-size:.98rem;
-    font-weight:800;
-    border-radius:var(--radius-md);
-    cursor:pointer;
-    border:2px solid transparent;
-    background:var(--primary);   /* TOUS bleus par défaut */
-    color:#fff;
-    transition:background .12s ease,transform .12s ease;
-  }
-  .ctrl-btn:hover{transform:translateY(-1px);}
-  .ctrl-btn:active{transform:translateY(0);background:var(--primary-700);}
-  
-  /* Variante blanche (ex: bouton Menu) */
+  .ctrl-btn{width:100%;text-align:center;}
   .ctrl-btn.white{
-    background:#fff;
-    color:#333;
-    border:2px solid #ddd;
+    grid-column:1/-1; /* bouton Menu prend toute la largeur */
+    width:100%;
   }
-  .ctrl-btn.white:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
-  
-  /* ===== Feedback & Résultats ===== */
-  .feedback{
-    min-height:28px;
-    margin:10px 0 12px;
-    font-size:1rem;
-    font-weight:600;
-    text-align:center;
-  }
-  .feedback.ok{color:#1f8b24;}
-  .feedback.err{color:#c62828;}
-  
-  #result{margin-top:18px;text-align:center;line-height:1.5;}
-  .score-img{display:block;margin:12px auto 16px;max-width:230px;height:auto;}
-  @media(max-width:600px){.score-img{max-width:180px;}}
-  
-  /* Scoreboard responsive */
-  .table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch;}
-  .score-table{width:100%;border-collapse:collapse;}
-  .score-table th,.score-table td{
-    border-bottom:1px solid #eaeaea;
-    padding:8px 10px;
-    text-align:center;
-  }
-  @media(max-width:600px){
-    .score-table thead{display:none;}
-    .score-table,.score-table tbody,.score-table tr,.score-table td{
-      display:block;width:100%;
-    }
-    .score-table tr{
-      margin-bottom:14px;
-      border:1px solid #eaeaea;
-      border-radius:10px;
-      padding:8px;
-      background:#fafafa;
-    }
-    .score-table td{
-      text-align:left;
-      border:none;
-      padding:6px;
-      font-size:14px;
-    }
-    .score-table td::before{
-      content:attr(data-label);
-      font-weight:700;
-      display:inline-block;
-      min-width:110px;
-      margin-right:6px;
-    }
-  }
-  
-  /* ===== Footer ===== */
-  .app-footer{margin:26px 0 20px;font-size:.85rem;color:#bdbdbd;text-align:center;}
-  
-  /* ===== Responsive ===== */
-  @media(min-width:680px){
-    .triad-selects{grid-template-columns:1fr 1fr 1fr 1fr;}
-  }
-  @media(max-width:600px){
-    .hdr-logo{width:120px!important;}
-    /* Alignement clean en 2 colonnes pour les contrôles */
-    .buttons-bottom{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-    .ctrl-btn{width:100%;text-align:center;}
-    .ctrl-btn.white{
-      grid-column:1/-1; /* bouton Menu en pleine largeur */
-      width:100%;
-    }
-  }
+}

@@ -285,3 +285,17 @@ select:focus-visible{
 @media (min-width: 680px){
   .triad-selects{ grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
+
+/* Force mobile layout even if old CSS is cached somewhere */
+@media (max-width: 600px){
+  body .buttons-bottom{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+  body .ctrl-btn{ width: 100% !important; text-align: center !important; }
+  body .ctrl-btn.white{ grid-column: 1 / -1 !important; } /* Menu pleine largeur */
+  body .triad-selects{ grid-template-columns: 1fr !important; }
+  body .score-img{ max-width: 180px !important; }
+}

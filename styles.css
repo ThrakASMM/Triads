@@ -1,16 +1,18 @@
-/* =========================================================
-   ASMM Pro Theme — Mobile tactile (2 colonnes) + Desktop
-   Couleurs : Bleu ASMM partout, "Valider" en fuchsia
-   ========================================================= */
+/* ===========================
+   ASMM Pro Theme — Option A
+   - Footer défilant (pas fixé)
+   - Zone de jeu flexible (min-height + overflow auto)
+   - Valider fuchsia, autres boutons bleus
+   =========================== */
 
-/* ---------- Variables de thème ---------- */
+/* ---- Variables ---- */
 :root{
-  --bg:#1f1f1f;          /* fond global sombre */
-  --surface:#ffffff;     /* panneau principal */
-  --card:#ffffff;        /* cartes internes */
-  --primary:#0a66ff;     /* bleu ASMM */
-  --primary-700:#0756d6; /* hover bleu */
-  --fuchsia:#e91e63;     /* bouton Valider */
+  --bg:#1f1f1f;
+  --surface:#ffffff;
+  --card:#ffffff;
+  --primary:#0a66ff;
+  --primary-700:#0756d6;
+  --fuchsia:#e91e63;
   --fuchsia-hover:#c2185b;
   --neutral-border:#d0d5dd;
   --text:#111;
@@ -21,13 +23,9 @@
   --radius-md:10px;
 }
 
-/* ---------- Reset & base ---------- */
-*{ box-sizing:border-box; }
+*{box-sizing:border-box}
 
-html, body{
-  height:100%;
-}
-
+/* ---- Page ---- */
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:var(--bg);
@@ -38,7 +36,7 @@ body{
   align-items:center;
 }
 
-/* ---------- Header (lisible sur fond sombre) ---------- */
+/* ---- En-tête ---- */
 .menu-hdr{
   width:min(960px,92vw);
   margin:20px 0 8px;
@@ -46,33 +44,28 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:16px;
 }
-
 .menu-hdr h1{
   margin:0;
-  font-size:clamp(28px,2.8vw,36px);
+  font-size:clamp(28px,2.5vw,34px);
   font-weight:800;
-  color:var(--text-invert); /* blanc */
+  color:var(--text-invert);
 }
-
 .menu-hdr .subtitle{
   margin:4px 0 0;
-  font-size:clamp(15px,1.6vw,18px);
-  color:#cfd4dc;          /* gris clair lisible */
+  font-size:clamp(16px,1.5vw,20px);
+  color:#cfd4dc;
 }
-
 .hdr-logo{
-  width:clamp(110px,20vw,180px) !important;
+  width:clamp(110px,20vw,180px)!important;
   max-height:140px;
   height:auto;
   object-fit:contain;
   display:block;
-  flex:0 0 auto;
 }
 
-/* ---------- Conteneurs principaux ---------- */
-#menu, #game{
+/* ---- Conteneurs principaux ---- */
+#menu,#game{
   background:var(--surface);
   width:min(960px,92vw);
   padding:clamp(16px,2.6vw,22px);
@@ -81,18 +74,16 @@ body{
   box-shadow:var(--shadow);
 }
 
-/* Bloc HUD (progress/score/temps) */
-.hud{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  margin-bottom:10px;
+/* ✅ Option A : la zone de jeu s’étire et scrolle au besoin */
+#game{
+  /* occupe la majorité de l’écran, même quand un 4e select apparaît */
+  min-height:80vh;
+  /* si le contenu dépasse (ex. petits écrans), on scrolle dans la carte */
+  overflow-y:auto;
+  /* pour éviter un scroll horizontal accidentel */
+  overflow-x:hidden;
 }
-.hud-left > div{ line-height:1.25; }
-#timing{ font-weight:700; }
 
-/* ---------- Cartes ---------- */
 .card{
   background:var(--card);
   border-radius:var(--radius-lg);
@@ -101,38 +92,44 @@ body{
   border:1px solid #eee;
 }
 
-/* Question affichée */
+/* ---- HUD ---- */
+.hud{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+}
+.hud-left>div{line-height:1.25}
+#timing{font-weight:600}
+
+/* ---- Bloc question ---- */
 #question{
   background:#f9fbff;
   border:1px solid #e7eefb;
   color:#111;
-  border-radius:var(--radius-lg);
 }
 
-/* ---------- Sélecteurs de réponse ---------- */
+/* ---- Sélecteurs de réponse ---- */
 .triad-selects{
   display:grid;
-  grid-template-columns:1fr; /* lisible par défaut */
+  grid-template-columns:1fr;
   gap:10px;
-  margin-bottom:8px;
+  margin-bottom:6px;
 }
-
 select{
   width:100%;
   padding:12px 14px;
   border-radius:var(--radius-md);
   border:1.5px solid var(--neutral-border);
   font-size:1rem;
-  font-weight:700;          /* plus lisible, comme demandé */
+  font-weight:700;
   background:#fff;
   color:#111;
 }
-select:focus-visible{
-  outline:2px solid #99bdff;
-  outline-offset:2px;
-}
+select:focus-visible{outline:2px solid #99bdff;outline-offset:2px}
 
-/* ---------- Bouton Valider (fuchsia) ---------- */
+/* ---- Bouton Valider ---- */
 .validate-btn{
   width:100%;
   padding:14px 16px;
@@ -143,12 +140,12 @@ select:focus-visible{
   background:var(--fuchsia);
   color:var(--text-invert);
   cursor:pointer;
-  transition:transform .15s ease, background .15s ease;
+  transition:transform .15s ease,background .15s ease;
 }
-.validate-btn:hover{ background:var(--fuchsia-hover); transform:translateY(-1px); }
-.validate-btn:active{ transform:translateY(0); }
+.validate-btn:hover{background:var(--fuchsia-hover);transform:translateY(-1px)}
+.validate-btn:active{transform:translateY(0)}
 
-/* ---------- Boutons de contrôle ---------- */
+/* ---- Boutons d’action ---- */
 .buttons-bottom{
   display:flex;
   flex-wrap:wrap;
@@ -156,7 +153,6 @@ select:focus-visible{
   gap:10px;
   margin-top:12px;
 }
-
 .ctrl-btn{
   padding:12px 18px;
   font-size:.98rem;
@@ -164,22 +160,21 @@ select:focus-visible{
   border-radius:var(--radius-md);
   cursor:pointer;
   border:2px solid transparent;
-  background:var(--primary);    /* tous BLEUS par défaut */
+  background:var(--primary);
   color:#fff;
-  transition:background .12s ease, transform .12s ease;
+  transition:background .12s ease,transform .12s ease;
 }
-.ctrl-btn:hover{ transform:translateY(-1px); }
-.ctrl-btn:active{ transform:translateY(0); background:var(--primary-700); }
-
-/* Variante blanche (Menu) */
+.ctrl-btn:hover{transform:translateY(-1px)}
+.ctrl-btn:active{transform:translateY(0);background:var(--primary-700)}
+/* Bouton Menu en blanc */
 .ctrl-btn.white{
   background:#fff;
   color:#333;
   border:2px solid #ddd;
 }
-.ctrl-btn.white:hover{ box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.ctrl-btn.white:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
 
-/* ---------- Feedback & Résultats ---------- */
+/* ---- Feedback / Résultats ---- */
 .feedback{
   min-height:28px;
   margin:10px 0 12px;
@@ -187,78 +182,24 @@ select:focus-visible{
   font-weight:600;
   text-align:center;
 }
-.feedback.ok{ color:#1f8b24; }
-.feedback.err{ color:#c62828; }
+.feedback.ok{color:#1f8b24}
+.feedback.err{color:#c62828}
 
-#result{
-  margin-top:18px;
-  text-align:center;
-  line-height:1.5;
-}
+#result{margin-top:18px;text-align:center;line-height:1.5}
+.score-img{display:block;margin:12px auto 16px;max-width:230px;height:auto}
+@media (max-width:600px){.score-img{max-width:180px}}
 
-/* Image de score (un peu plus grande) */
-.score-img{
-  display:block;
-  margin:12px auto 16px;
-  max-width:230px;
-  height:auto;
-}
-
-/* ---------- Scoreboard responsive ---------- */
-.table-wrap{ max-width:100%; overflow:auto; -webkit-overflow-scrolling:touch; }
-.score-table{ width:100%; border-collapse:collapse; }
-.score-table th, .score-table td{
+/* ---- Scoreboard responsive ---- */
+.table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+.score-table{width:100%;border-collapse:collapse}
+.score-table th,.score-table td{
   border-bottom:1px solid #eaeaea;
   padding:8px 10px;
   text-align:center;
 }
-
-/* ---------- Footer ---------- */
-.app-footer{
-  margin:26px 0 20px;
-  font-size:.85rem;
-  color:#bdbdbd;
-  text-align:center;
-}
-
-/* =========================================================
-   Responsive — Variante C : 2 colonnes tactile en mobile
-   ========================================================= */
-
-/* Petits écrans (portrait smartphone) */
-@media (max-width: 600px){
-
-  /* Un peu plus gros pour le confort tactile */
-  body{ font-size: 17px; }
-
-  /* Les selects restent en 1 colonne pour éviter les miss-tap */
-  .triad-selects{ grid-template-columns: 1fr; }
-
-  /* Boutons en 2 colonnes alignées proprement */
-  .buttons-bottom{
-    display:grid;
-    grid-template-columns: 1fr 1fr;  /* 2 colonnes */
-    gap:10px;
-    align-items:stretch;
-  }
-  .ctrl-btn{ width:100%; text-align:center; }
-
-  /* "Menu" en pleine largeur (rangée entière) */
-  .ctrl-btn.white{
-    grid-column: 1 / -1;
-    width:100%;
-  }
-
-  /* Image de score un peu plus petite en mobile */
-  .score-img{ max-width:180px; }
-}
-
-/* Table de scores "cartes" en mobile */
-@media (max-width: 600px){
-  .score-table thead{ display:none; }
-  .score-table, .score-table tbody, .score-table tr, .score-table td{
-    display:block; width:100%;
-  }
+@media (max-width:600px){
+  .score-table thead{display:none}
+  .score-table,.score-table tbody,.score-table tr,.score-table td{display:block;width:100%}
   .score-table tr{
     margin-bottom:14px;
     border:1px solid #eaeaea;
@@ -281,21 +222,26 @@ select:focus-visible{
   }
 }
 
-/* Écrans ≥ 680px : on peut passer les selects en 3–4 colonnes si besoin */
-@media (min-width: 680px){
-  .triad-selects{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+/* ---- Footer ---- */
+.app-footer{
+  margin:26px 0 20px;
+  font-size:.85rem;
+  color:#bdbdbd;
+  text-align:center;
 }
 
-/* Force mobile layout even if old CSS is cached somewhere */
-@media (max-width: 600px){
-  body .buttons-bottom{
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-    align-items: stretch !important;
+/* ---- Responsive layout ---- */
+@media (min-width:680px){
+  .triad-selects{grid-template-columns:1fr 1fr 1fr 1fr}
+}
+@media (max-width:600px){
+  .hdr-logo{width:120px!important}
+  /* Boutons en 2 colonnes, Menu en pleine largeur */
+  .buttons-bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
-  body .ctrl-btn{ width: 100% !important; text-align: center !important; }
-  body .ctrl-btn.white{ grid-column: 1 / -1 !important; } /* Menu pleine largeur */
-  body .triad-selects{ grid-template-columns: 1fr !important; }
-  body .score-img{ max-width: 180px !important; }
+  .ctrl-btn{width:100%;text-align:center}
+  .ctrl-btn.white{grid-column:1/-1;width:100%}
 }

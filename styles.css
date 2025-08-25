@@ -1,27 +1,33 @@
-/* ===========================
-   ASMM Pro Theme — Version complète commentée
-   =========================== */
+/* =========================================================
+   ASMM Pro Theme — Mobile tactile (2 colonnes) + Desktop
+   Couleurs : Bleu ASMM partout, "Valider" en fuchsia
+   ========================================================= */
 
-/* --- Variables globales (couleurs, tailles, etc.) --- */
-:root {
-  --bg:#1f1f1f;            /* fond global sombre */
-  --surface:#ffffff;       /* fond des cartes principales */
-  --card:#ffffff;          /* fond interne des blocs */
-  --primary:#0a66ff;       /* bleu ASMM (boutons par défaut) */
-  --primary-700:#0756d6;   /* bleu foncé hover */
-  --fuchsia:#e91e63;       /* bouton Valider */
-  --fuchsia-hover:#c2185b; /* hover du Valider */
+/* ---------- Variables de thème ---------- */
+:root{
+  --bg:#1f1f1f;          /* fond global sombre */
+  --surface:#ffffff;     /* panneau principal */
+  --card:#ffffff;        /* cartes internes */
+  --primary:#0a66ff;     /* bleu ASMM */
+  --primary-700:#0756d6; /* hover bleu */
+  --fuchsia:#e91e63;     /* bouton Valider */
+  --fuchsia-hover:#c2185b;
   --neutral-border:#d0d5dd;
-  --text:#111;             /* texte principal */
-  --text-sub:#5a5a5a;      /* sous-texte */
-  --text-invert:#fff;      /* texte inversé (sur fond sombre ou bouton coloré) */
-  --shadow:0 2px 10px rgba(0,0,0,.08); /* ombre douce */
+  --text:#111;
+  --text-sub:#5a5a5a;
+  --text-invert:#fff;
+  --shadow:0 2px 10px rgba(0,0,0,.08);
   --radius-lg:12px;
   --radius-md:10px;
 }
 
-/* --- Reset & Base --- */
-*{box-sizing:border-box;}
+/* ---------- Reset & base ---------- */
+*{ box-sizing:border-box; }
+
+html, body{
+  height:100%;
+}
+
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:var(--bg);
@@ -32,9 +38,7 @@ body{
   align-items:center;
 }
 
-/* ===========================
-   HEADER
-   =========================== */
+/* ---------- Header (lisible sur fond sombre) ---------- */
 .menu-hdr{
   width:min(960px,92vw);
   margin:20px 0 8px;
@@ -42,30 +46,33 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:16px;
 }
+
 .menu-hdr h1{
   margin:0;
-  font-size:clamp(28px,2.5vw,34px);
+  font-size:clamp(28px,2.8vw,36px);
   font-weight:800;
-  color:var(--text-invert);  /* titre en blanc */
+  color:var(--text-invert); /* blanc */
 }
+
 .menu-hdr .subtitle{
   margin:4px 0 0;
-  font-size:clamp(16px,1.5vw,20px);
-  color:#cfd4dc;            /* sous-titre gris clair lisible */
+  font-size:clamp(15px,1.6vw,18px);
+  color:#cfd4dc;          /* gris clair lisible */
 }
+
 .hdr-logo{
-  width:clamp(110px,20vw,180px)!important;
+  width:clamp(110px,20vw,180px) !important;
   max-height:140px;
   height:auto;
   object-fit:contain;
   display:block;
+  flex:0 0 auto;
 }
 
-/* ===========================
-   CONTAINERS
-   =========================== */
-#menu,#game{
+/* ---------- Conteneurs principaux ---------- */
+#menu, #game{
   background:var(--surface);
   width:min(960px,92vw);
   padding:clamp(16px,2.6vw,22px);
@@ -73,6 +80,19 @@ body{
   margin:6px 0 18px;
   box-shadow:var(--shadow);
 }
+
+/* Bloc HUD (progress/score/temps) */
+.hud{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
+}
+.hud-left > div{ line-height:1.25; }
+#timing{ font-weight:700; }
+
+/* ---------- Cartes ---------- */
 .card{
   background:var(--card);
   border-radius:var(--radius-lg);
@@ -81,52 +101,38 @@ body{
   border:1px solid #eee;
 }
 
-/* ===========================
-   HUD (progression, score, temps)
-   =========================== */
-.hud{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  margin-bottom:10px;
-}
-.hud-left>div{line-height:1.25;}
-#timing{font-weight:600;}
-
-/* ===========================
-   QUESTION BLOCK
-   =========================== */
+/* Question affichée */
 #question{
-  background:#f9fbff; /* léger bleu clair */
+  background:#f9fbff;
   border:1px solid #e7eefb;
   color:#111;
+  border-radius:var(--radius-lg);
 }
 
-/* ===========================
-   SELECTS (Réponses)
-   =========================== */
+/* ---------- Sélecteurs de réponse ---------- */
 .triad-selects{
   display:grid;
-  grid-template-columns:1fr;
+  grid-template-columns:1fr; /* lisible par défaut */
   gap:10px;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
+
 select{
   width:100%;
   padding:12px 14px;
   border-radius:var(--radius-md);
   border:1.5px solid var(--neutral-border);
   font-size:1rem;
-  font-weight:700;   /* bien visible */
+  font-weight:700;          /* plus lisible, comme demandé */
   background:#fff;
   color:#111;
 }
-select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
+select:focus-visible{
+  outline:2px solid #99bdff;
+  outline-offset:2px;
+}
 
-/* ===========================
-   BOUTON VALIDER (fuchsia)
-   =========================== */
+/* ---------- Bouton Valider (fuchsia) ---------- */
 .validate-btn{
   width:100%;
   padding:14px 16px;
@@ -137,14 +143,12 @@ select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
   background:var(--fuchsia);
   color:var(--text-invert);
   cursor:pointer;
-  transition:transform .15s ease,background .15s ease;
+  transition:transform .15s ease, background .15s ease;
 }
-.validate-btn:hover{background:var(--fuchsia-hover);transform:translateY(-1px);}
-.validate-btn:active{transform:translateY(0);}
+.validate-btn:hover{ background:var(--fuchsia-hover); transform:translateY(-1px); }
+.validate-btn:active{ transform:translateY(0); }
 
-/* ===========================
-   BOUTONS CONTRÔLES
-   =========================== */
+/* ---------- Boutons de contrôle ---------- */
 .buttons-bottom{
   display:flex;
   flex-wrap:wrap;
@@ -152,6 +156,7 @@ select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
   gap:10px;
   margin-top:12px;
 }
+
 .ctrl-btn{
   padding:12px 18px;
   font-size:.98rem;
@@ -159,24 +164,22 @@ select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
   border-radius:var(--radius-md);
   cursor:pointer;
   border:2px solid transparent;
-  background:var(--primary);   /* TOUS bleus par défaut */
+  background:var(--primary);    /* tous BLEUS par défaut */
   color:#fff;
-  transition:background .12s ease,transform .12s ease;
+  transition:background .12s ease, transform .12s ease;
 }
-.ctrl-btn:hover{transform:translateY(-1px);}
-.ctrl-btn:active{transform:translateY(0);background:var(--primary-700);}
+.ctrl-btn:hover{ transform:translateY(-1px); }
+.ctrl-btn:active{ transform:translateY(0); background:var(--primary-700); }
 
-/* Variante blanche (ex: bouton Menu) */
+/* Variante blanche (Menu) */
 .ctrl-btn.white{
   background:#fff;
   color:#333;
   border:2px solid #ddd;
 }
-.ctrl-btn.white:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.ctrl-btn.white:hover{ box-shadow:0 2px 8px rgba(0,0,0,.06); }
 
-/* ===========================
-   FEEDBACK + RÉSULTATS
-   =========================== */
+/* ---------- Feedback & Résultats ---------- */
 .feedback{
   min-height:28px;
   margin:10px 0 12px;
@@ -184,27 +187,77 @@ select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
   font-weight:600;
   text-align:center;
 }
-.feedback.ok{color:#1f8b24;}
-.feedback.err{color:#c62828;}
+.feedback.ok{ color:#1f8b24; }
+.feedback.err{ color:#c62828; }
 
-#result{margin-top:18px;text-align:center;line-height:1.5;}
-.score-img{display:block;margin:12px auto 16px;max-width:230px;height:auto;}
-@media(max-width:600px){.score-img{max-width:180px;}}
+#result{
+  margin-top:18px;
+  text-align:center;
+  line-height:1.5;
+}
 
-/* ===========================
-   SCOREBOARD (responsive)
-   =========================== */
-.table-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch;}
-.score-table{width:100%;border-collapse:collapse;}
-.score-table th,.score-table td{
+/* Image de score (un peu plus grande) */
+.score-img{
+  display:block;
+  margin:12px auto 16px;
+  max-width:230px;
+  height:auto;
+}
+
+/* ---------- Scoreboard responsive ---------- */
+.table-wrap{ max-width:100%; overflow:auto; -webkit-overflow-scrolling:touch; }
+.score-table{ width:100%; border-collapse:collapse; }
+.score-table th, .score-table td{
   border-bottom:1px solid #eaeaea;
   padding:8px 10px;
   text-align:center;
 }
-@media(max-width:600px){
-  .score-table thead{display:none;}
-  .score-table,.score-table tbody,.score-table tr,.score-table td{
-    display:block;width:100%;
+
+/* ---------- Footer ---------- */
+.app-footer{
+  margin:26px 0 20px;
+  font-size:.85rem;
+  color:#bdbdbd;
+  text-align:center;
+}
+
+/* =========================================================
+   Responsive — Variante C : 2 colonnes tactile en mobile
+   ========================================================= */
+
+/* Petits écrans (portrait smartphone) */
+@media (max-width: 600px){
+
+  /* Un peu plus gros pour le confort tactile */
+  body{ font-size: 17px; }
+
+  /* Les selects restent en 1 colonne pour éviter les miss-tap */
+  .triad-selects{ grid-template-columns: 1fr; }
+
+  /* Boutons en 2 colonnes alignées proprement */
+  .buttons-bottom{
+    display:grid;
+    grid-template-columns: 1fr 1fr;  /* 2 colonnes */
+    gap:10px;
+    align-items:stretch;
+  }
+  .ctrl-btn{ width:100%; text-align:center; }
+
+  /* "Menu" en pleine largeur (rangée entière) */
+  .ctrl-btn.white{
+    grid-column: 1 / -1;
+    width:100%;
+  }
+
+  /* Image de score un peu plus petite en mobile */
+  .score-img{ max-width:180px; }
+}
+
+/* Table de scores "cartes" en mobile */
+@media (max-width: 600px){
+  .score-table thead{ display:none; }
+  .score-table, .score-table tbody, .score-table tr, .score-table td{
+    display:block; width:100%;
   }
   .score-table tr{
     margin-bottom:14px;
@@ -228,33 +281,7 @@ select:focus-visible{outline:2px solid #99bdff;outline-offset:2px;}
   }
 }
 
-/* ===========================
-   FOOTER
-   =========================== */
-.app-footer{
-  margin:26px 0 20px;
-  font-size:.85rem;
-  color:#bdbdbd;
-  text-align:center;
-}
-
-/* ===========================
-   RESPONSIVE MOBILE
-   =========================== */
-@media(min-width:680px){
-  .triad-selects{grid-template-columns:1fr 1fr 1fr 1fr;}
-}
-@media(max-width:600px){
-  .hdr-logo{width:120px!important;}
-  /* Alignement clean en 2 colonnes pour les boutons */
-  .buttons-bottom{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-  .ctrl-btn{width:100%;text-align:center;}
-  .ctrl-btn.white{
-    grid-column:1/-1; /* bouton Menu prend toute la largeur */
-    width:100%;
-  }
+/* Écrans ≥ 680px : on peut passer les selects en 3–4 colonnes si besoin */
+@media (min-width: 680px){
+  .triad-selects{ grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
